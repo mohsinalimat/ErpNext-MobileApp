@@ -21,7 +21,7 @@ class AiAdvisorPage extends StatefulWidget {
 class _AiAdvisorPageState extends State<AiAdvisorPage> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
-  final _chatService = GeminiChatService(model: 'gemini-3-flash-preview');
+  final _chatService = GeminiChatService(model: 'gemini-3-flash-preview', apiKey: 'AIzaSyBY60k8szesGO4ZPj0MN_QsUMa-ilw-rB8');
   final _speech = SpeechToText();
   final _tts = FlutterTts();
   final _picker = ImagePicker();
