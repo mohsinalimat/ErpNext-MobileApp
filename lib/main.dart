@@ -15,6 +15,20 @@ import 'features/projects/data/datasources/project_remote_datasource.dart';
 import 'features/projects/data/repositories/project_repository_impl.dart';
 import 'features/projects/domain/usecases/get_projects_usecase.dart';
 import 'features/projects/domain/usecases/get_project_details_usecase.dart';
+import 'features/sales/lead/data/datasources/lead_remote_datasource.dart';
+import 'features/sales/lead/data/repositories/lead_repository_impl.dart';
+import 'features/sales/lead/domain/usecases/add_lead_follow_up_usecase.dart';
+import 'features/sales/lead/domain/usecases/create_lead_usecase.dart';
+import 'features/sales/lead/domain/usecases/get_lead_details_usecase.dart';
+import 'features/sales/lead/domain/usecases/get_lead_required_fields_usecase.dart';
+import 'features/sales/lead/domain/usecases/get_leads_usecase.dart';
+import 'features/sales/lead/domain/usecases/get_leads_dashboard_summary_usecase.dart';
+import 'features/sales/lead/domain/usecases/search_lead_link_options_usecase.dart';
+import 'features/sales/lead/domain/usecases/upload_lead_attachment_usecase.dart';
+import 'features/sales/lead/domain/usecases/update_lead_usecase.dart';
+import 'features/sales/lead/presentation/providers/lead_details_provider.dart';
+import 'features/sales/lead/presentation/providers/lead_form_provider.dart';
+import 'features/sales/lead/presentation/providers/leads_provider.dart';
 
 void main() {
   final authRepo = AuthRepositoryImpl();
@@ -25,6 +39,20 @@ void main() {
   final getProjectsUseCase = GetProjectsUseCase(projectsRepo);
   final getProjectDetailsUseCase = GetProjectDetailsUseCase(projectsRepo);
 
+  final leadRemoteDataSource = LeadRemoteDataSource();
+  final leadsRepo = LeadRepositoryImpl(leadRemoteDataSource);
+  final getLeadsUseCase = GetLeadsUseCase(leadsRepo);
+  final getLeadsDashboardSummaryUseCase = GetLeadsDashboardSummaryUseCase(
+    leadsRepo,
+  );
+  final getLeadDetailsUseCase = GetLeadDetailsUseCase(leadsRepo);
+  final getLeadRequiredFieldsUseCase = GetLeadRequiredFieldsUseCase(leadsRepo);
+  final createLeadUseCase = CreateLeadUseCase(leadsRepo);
+  final updateLeadUseCase = UpdateLeadUseCase(leadsRepo);
+  final addLeadFollowUpUseCase = AddLeadFollowUpUseCase(leadsRepo);
+  final searchLeadLinkOptionsUseCase = SearchLeadLinkOptionsUseCase(leadsRepo);
+  final uploadLeadAttachmentUseCase = UploadLeadAttachmentUseCase(leadsRepo);
+
   runApp(
     MultiProvider(
       providers: [
@@ -34,6 +62,27 @@ void main() {
         ChangeNotifierProvider(create: (_) => ProjectsProvider(getProjectsUseCase)),
         ChangeNotifierProvider(
           create: (_) => ProjectDetailsProvider(getProjectDetailsUseCase),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeadsProvider(
+            getLeadsUseCase,
+            getLeadsDashboardSummaryUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeadDetailsProvider(
+            getLeadDetailsUseCase,
+            addLeadFollowUpUseCase,
+            uploadLeadAttachmentUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LeadFormProvider(
+            getLeadRequiredFieldsUseCase,
+            createLeadUseCase,
+            updateLeadUseCase,
+            searchLeadLinkOptionsUseCase,
+          ),
         ),
       ],
       child: const MyApp(),

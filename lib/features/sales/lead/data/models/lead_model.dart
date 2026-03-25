@@ -1,0 +1,96 @@
+import '../../domain/entities/lead.dart';
+
+class LeadModel extends Lead {
+  const LeadModel({
+    required super.name,
+    required super.leadName,
+    required super.firstName,
+    required super.companyName,
+    required super.email,
+    required super.mobileNo,
+    required super.status,
+    required super.source,
+    required super.lastModified,
+    required super.lastUpdateDate,
+    required super.nextFollowUpDate,
+    required super.lastFollowUpReport,
+    required super.hasFollowUp,
+    required super.isOverdue,
+    required super.isDueToday,
+    required super.isDueThisWeek,
+    required super.isDueThisMonth,
+    required super.neverContacted,
+  });
+
+  factory LeadModel.fromJson(Map<String, dynamic> json) {
+    final name = json['name']?.toString() ?? json['id']?.toString() ?? '';
+    final contact = json['contact'];
+    final summary = json['follow_up_summary'];
+    final contactMap = contact is Map<String, dynamic>
+        ? contact
+        : const <String, dynamic>{};
+    final summaryMap = summary is Map<String, dynamic>
+        ? summary
+        : const <String, dynamic>{};
+    return LeadModel(
+      name: name,
+      leadName: name,
+      firstName: _readFirstName(json),
+      companyName: json['company_name']?.toString() ?? '',
+      email: json['email_id']?.toString() ??
+          contactMap['email']?.toString() ??
+          '',
+      mobileNo: json['mobile_no']?.toString() ??
+          contactMap['mobile']?.toString() ??
+          '',
+      status: json['status']?.toString() ?? '',
+      source: json['source']?.toString() ?? '',
+      lastModified: json['modified']?.toString() ?? '',
+      lastUpdateDate: json['last_update_date']?.toString() ??
+          summaryMap['last_update_date']?.toString() ??
+          '',
+      nextFollowUpDate: json['next_follow_up_date']?.toString() ??
+          summaryMap['next_follow_up_date']?.toString() ??
+          '',
+      lastFollowUpReport: json['last_follow_up_report']?.toString() ??
+          summaryMap['last_follow_up_report']?.toString() ??
+          '',
+      hasFollowUp: _toBool(
+        json['has_follow_up'] ?? summaryMap['has_follow_up'],
+      ),
+      isOverdue: _toBool(json['is_overdue'] ?? summaryMap['is_overdue']),
+      isDueToday: _toBool(json['is_due_today'] ?? summaryMap['is_due_today']),
+      isDueThisWeek: _toBool(
+        json['is_due_this_week'] ?? summaryMap['is_due_this_week'],
+      ),
+      isDueThisMonth: _toBool(
+        json['is_due_this_month'] ?? summaryMap['is_due_this_month'],
+      ),
+      neverContacted: _toBool(
+        json['never_contacted'] ?? summaryMap['never_contacted'],
+      ),
+    );
+  }
+
+  static bool _toBool(dynamic value) {
+    if (value is bool) return value;
+    final text = value?.toString().toLowerCase() ?? '';
+    return text == '1' || text == 'true' || text == 'yes';
+  }
+
+  static String _readFirstName(Map<String, dynamic> json) {
+    final direct = json['first_name']?.toString();
+    if (direct != null && direct.isNotEmpty) return direct;
+
+    final displayName = json['display_name']?.toString();
+    if (displayName != null && displayName.isNotEmpty) return displayName;
+
+    final leadName = json['lead_name']?.toString();
+    if (leadName != null && leadName.isNotEmpty) return leadName;
+
+    final company = json['company_name']?.toString();
+    if (company != null && company.isNotEmpty) return company;
+
+    return json['name']?.toString() ?? json['id']?.toString() ?? '';
+  }
+}

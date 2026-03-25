@@ -17,6 +17,10 @@ class AppLogger {
     debugPrint('[NAV] $message');
   }
 
+  static void sales(String message) {
+    debugPrint('[SALES] $message');
+  }
+
   static void error(String message) {
     debugPrint('[ERROR] $message');
   }
