@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../lead/presentation/pages/leads_page.dart';
+import '../../opportunity/presentation/pages/opportunities_page.dart';
+import '../../opportunity/presentation/widgets/opportunity_scope.dart';
 
 class SalesPage extends StatelessWidget {
   final bool embedded;
@@ -33,11 +35,21 @@ class SalesPage extends StatelessWidget {
             },
           ),
           const SizedBox(height: 12),
-          const _SalesCard(
+          _SalesCard(
             title: "Opportunities",
             subtitle: "Open sales opportunities",
             icon: Icons.trending_up_rounded,
             color: Color(0xFFFFF3C7),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const OpportunityScope(
+                    child: OpportunitiesPage(),
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 12),
           const _SalesCard(

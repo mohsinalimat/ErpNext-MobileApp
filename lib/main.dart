@@ -29,6 +29,24 @@ import 'features/sales/lead/domain/usecases/update_lead_usecase.dart';
 import 'features/sales/lead/presentation/providers/lead_details_provider.dart';
 import 'features/sales/lead/presentation/providers/lead_form_provider.dart';
 import 'features/sales/lead/presentation/providers/leads_provider.dart';
+import 'features/sales/opportunity/data/datasources/opportunity_remote_datasource.dart';
+import 'features/sales/opportunity/data/repositories/opportunity_repository_impl.dart';
+import 'features/sales/opportunity/domain/usecases/add_opportunity_follow_up_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/create_opportunity_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/execute_opportunity_workflow_action_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunities_dashboard_summary_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunities_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunity_details_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunity_form_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunity_party_prefill_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunity_required_fields_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/get_opportunity_workflow_actions_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/search_opportunity_link_options_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/update_opportunity_usecase.dart';
+import 'features/sales/opportunity/domain/usecases/upload_opportunity_attachment_usecase.dart';
+import 'features/sales/opportunity/presentation/providers/opportunities_provider.dart';
+import 'features/sales/opportunity/presentation/providers/opportunity_details_provider.dart';
+import 'features/sales/opportunity/presentation/providers/opportunity_form_provider.dart';
 
 void main() {
   final authRepo = AuthRepositoryImpl();
@@ -52,6 +70,31 @@ void main() {
   final addLeadFollowUpUseCase = AddLeadFollowUpUseCase(leadsRepo);
   final searchLeadLinkOptionsUseCase = SearchLeadLinkOptionsUseCase(leadsRepo);
   final uploadLeadAttachmentUseCase = UploadLeadAttachmentUseCase(leadsRepo);
+
+  final opportunityRemoteDataSource = OpportunityRemoteDataSource();
+  final opportunitiesRepo = OpportunityRepositoryImpl(opportunityRemoteDataSource);
+  final getOpportunitiesUseCase = GetOpportunitiesUseCase(opportunitiesRepo);
+  final getOpportunitiesDashboardSummaryUseCase =
+      GetOpportunitiesDashboardSummaryUseCase(opportunitiesRepo);
+  final getOpportunityDetailsUseCase =
+      GetOpportunityDetailsUseCase(opportunitiesRepo);
+  final getOpportunityFormUseCase = GetOpportunityFormUseCase(opportunitiesRepo);
+  final getOpportunityPartyPrefillUseCase =
+      GetOpportunityPartyPrefillUseCase(opportunitiesRepo);
+  final getOpportunityRequiredFieldsUseCase =
+      GetOpportunityRequiredFieldsUseCase(opportunitiesRepo);
+  final createOpportunityUseCase = CreateOpportunityUseCase(opportunitiesRepo);
+  final updateOpportunityUseCase = UpdateOpportunityUseCase(opportunitiesRepo);
+  final getOpportunityWorkflowActionsUseCase =
+      GetOpportunityWorkflowActionsUseCase(opportunitiesRepo);
+  final executeOpportunityWorkflowActionUseCase =
+      ExecuteOpportunityWorkflowActionUseCase(opportunitiesRepo);
+  final addOpportunityFollowUpUseCase =
+      AddOpportunityFollowUpUseCase(opportunitiesRepo);
+  final searchOpportunityLinkOptionsUseCase =
+      SearchOpportunityLinkOptionsUseCase(opportunitiesRepo);
+  final uploadOpportunityAttachmentUseCase =
+      UploadOpportunityAttachmentUseCase(opportunitiesRepo);
 
   runApp(
     MultiProvider(
@@ -82,6 +125,31 @@ void main() {
             createLeadUseCase,
             updateLeadUseCase,
             searchLeadLinkOptionsUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OpportunitiesProvider(
+            getOpportunitiesUseCase,
+            getOpportunitiesDashboardSummaryUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OpportunityDetailsProvider(
+            getOpportunityDetailsUseCase,
+            addOpportunityFollowUpUseCase,
+            getOpportunityWorkflowActionsUseCase,
+            executeOpportunityWorkflowActionUseCase,
+            uploadOpportunityAttachmentUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OpportunityFormProvider(
+            getOpportunityFormUseCase,
+            getOpportunityPartyPrefillUseCase,
+            getOpportunityRequiredFieldsUseCase,
+            createOpportunityUseCase,
+            updateOpportunityUseCase,
+            searchOpportunityLinkOptionsUseCase,
           ),
         ),
       ],

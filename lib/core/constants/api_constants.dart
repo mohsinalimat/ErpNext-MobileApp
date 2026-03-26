@@ -27,6 +27,32 @@ class ApiConstants {
       "/api/method/mobile_api.api.get_lead_follow_ups";
   static const String leadsDashboardSummaryEndpoint =
       "/api/method/mobile_api.api.get_leads_dashboard_summary";
+  static const String opportunityFormEndpoint =
+      "/api/method/mobile_api.api.get_opportunity_form";
+  static const String opportunitiesEndpoint =
+      "/api/method/mobile_api.api.get_opportunities";
+  static const String opportunityDetailsEndpoint =
+      "/api/method/mobile_api.api.get_opportunity_details";
+  static const String opportunityRequiredFieldsEndpoint =
+      "/api/method/mobile_api.api.get_opportunity_required_fields";
+  static const String createOpportunityEndpoint =
+      "/api/method/mobile_api.api.create_opportunity";
+  static const String updateOpportunityEndpoint =
+      "/api/method/mobile_api.api.update_opportunity";
+  static const String addOpportunityFollowUpEndpoint =
+      "/api/method/mobile_api.api.add_opportunity_follow_up";
+  static const String opportunityFollowUpsEndpoint =
+      "/api/method/mobile_api.api.get_opportunity_follow_ups";
+  static const String opportunitiesDashboardSummaryEndpoint =
+      "/api/method/mobile_api.api.get_opportunities_dashboard_summary";
+  static const String opportunityWorkflowActionsEndpoint =
+      "/api/method/mobile_api.api.get_opportunity_workflow_actions";
+  static const String executeOpportunityWorkflowActionEndpoint =
+      "/api/method/mobile_api.api.execute_opportunity_workflow_action";
+  static const String sendOpportunityForApprovalEndpoint =
+      "/api/method/mobile_api.api.send_opportunity_for_approval";
+  static const String returnOpportunityWorkflowEndpoint =
+      "/api/method/mobile_api.api.return_opportunity_workflow";
   static const String searchLinkEndpoint =
       "/api/method/frappe.desk.search.search_link";
 
