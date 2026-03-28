@@ -53,6 +53,26 @@ class ApiConstants {
       "/api/method/mobile_api.api.send_opportunity_for_approval";
   static const String returnOpportunityWorkflowEndpoint =
       "/api/method/mobile_api.api.return_opportunity_workflow";
+  static const String quotationsEndpoint =
+      "/api/method/mobile_api.api.get_quotations";
+  static const String quotationsDashboardSummaryEndpoint =
+      "/api/method/mobile_api.api.get_quotations_dashboard_summary";
+  static const String quotationDetailsEndpoint =
+      "/api/method/mobile_api.api.get_quotation_details";
+  static const String quotationPrintDataEndpoint =
+      "/api/method/mobile_api.api.get_quotation_print_data";
+  static const String addQuotationFollowUpEndpoint =
+      "/api/method/mobile_api.api.add_quotation_follow_up";
+  static const String quotationFollowUpsEndpoint =
+      "/api/method/mobile_api.api.get_quotation_follow_ups";
+  static const String quotationWorkflowActionsEndpoint =
+      "/api/method/mobile_api.api.get_quotation_workflow_actions";
+  static const String executeQuotationWorkflowActionEndpoint =
+      "/api/method/mobile_api.api.execute_quotation_workflow_action";
+  static const String sendQuotationForApprovalEndpoint =
+      "/api/method/mobile_api.api.send_quotation_for_approval";
+  static const String returnQuotationWorkflowEndpoint =
+      "/api/method/mobile_api.api.return_quotation_workflow";
   static const String searchLinkEndpoint =
       "/api/method/frappe.desk.search.search_link";
 

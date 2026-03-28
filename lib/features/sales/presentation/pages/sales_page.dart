@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../lead/presentation/pages/leads_page.dart';
 import '../../opportunity/presentation/pages/opportunities_page.dart';
 import '../../opportunity/presentation/widgets/opportunity_scope.dart';
+import '../../quotation/presentation/pages/quotations_page.dart';
+import '../../quotation/presentation/widgets/quotation_scope.dart';
 
 class SalesPage extends StatelessWidget {
   final bool embedded;
@@ -52,11 +54,21 @@ class SalesPage extends StatelessWidget {
             },
           ),
           const SizedBox(height: 12),
-          const _SalesCard(
+          _SalesCard(
             title: "Quotations",
             subtitle: "Sales quotations overview",
             icon: Icons.request_quote_rounded,
             color: Color(0xFFE0F2FE),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const QuotationScope(
+                    child: QuotationsPage(),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

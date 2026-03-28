@@ -516,6 +516,27 @@ class _OpportunityWorkflowCardState extends State<_OpportunityWorkflowCard> {
   }
 
   Future<void> _applyWorkflowAction(BuildContext context, String action) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Confirm Workflow Action'),
+        content: Text(
+          'Are you sure you want to run "$action" on this opportunity?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
     setState(() => _isSubmitting = true);
     final provider = context.read<OpportunityDetailsProvider>();
 
